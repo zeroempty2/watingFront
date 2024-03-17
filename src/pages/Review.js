@@ -17,7 +17,9 @@ const Comments = ({commentData}) => {
     </tr>
     )
 }
-
+const requestComment = () => {
+    alert("작성이 완료되었습니다.");
+}
 const Review = () =>{
    
     const reviewContents = [
@@ -54,7 +56,8 @@ const Review = () =>{
             {comments.map(comments => <Comments commentData={comments} />)}
         </tbody>
         <div>
-        <Link to = "/writeReview"><button >댓글작성</button></Link >
+        <input type="text"></input>
+        <Link to = "/writeReview"><button onClick={requestComment}>댓글작성</button></Link >
         </div>
         <Routes>
             <Route path="/writeReview" element={<WriteReview />} />
