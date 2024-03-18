@@ -1,6 +1,7 @@
 import React from "react"
 import {Routes,Route,Link} from "react-router-dom";
 import WriteReview from "./WriteReview";
+import axios from 'axios';
 
 const ReviewContents = ({reviewContentsData}) => {
     return(
@@ -17,9 +18,26 @@ const Comments = ({commentData}) => {
     </tr>
     )
 }
+
+
 const requestComment = () => {
     alert("작성이 완료되었습니다.");
 }
+
+
+const getComments = () => {
+    axios.get(URL_VARIABLE + "api/data")
+    .then(function (response) {
+      // 요청이 성공했을 때의 처리
+      console.log(response.data); 
+    })
+    .catch(function (error) {
+      // 요청이 실패했을 때의 처리
+      console.error(error); 
+    });
+  }
+
+
 const Review = () =>{
    
     const reviewContents = [
