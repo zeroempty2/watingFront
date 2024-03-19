@@ -20,8 +20,16 @@ const Comments = ({commentData}) => {
 }
 
 
-const requestComment = () => {
-    alert("작성이 완료되었습니다.");
+const writeComment = () => {
+    axios.post(URL_VARIABLE + "api/data")
+    .then(function (response) {
+      // 요청이 성공했을 때의 처리
+      console.log(response.data); 
+    })
+    .catch(function (error) {
+      // 요청이 실패했을 때의 처리
+      console.error(error); 
+    });
 }
 
 
@@ -75,7 +83,7 @@ const Review = () =>{
         </tbody>
         <div>
         <input type="text"></input>
-        <Link to = "/writeReview"><button onClick={requestComment}>댓글작성</button></Link >
+        <Link to = "/writeReview"><button onClick={writeComment}>댓글작성</button></Link >
         </div>
         <Routes>
             <Route path="/writeReview" element={<WriteReview />} />
