@@ -3,24 +3,19 @@ import {Routes,Route,Link} from "react-router-dom";
 import Review from "./Review";
 import WriteReview from "./WriteReview";
 import axios from 'axios';
+import { URL_VARIABLE } from "./ExportUrl"; 
 
-const Reviews = ({reviewData}) =>{
-    return(
+const Reviews = ({ reviewData }) => {
+    return (
         <tr>
-        <td><Link to = "/review"> {reviewData.reviewId} </Link> </td>
-        <td>{reviewData.writerName}</td>
-        <td>{reviewData.reviewTitle}</td>
-        <td>{reviewData.createdAt}</td>
-        <td>{reviewData.reviewLikeCount}</td>
-        <Routes>
-            <Route path="/review" element={<Review />} />
-        </Routes>
-    </tr>
-    )
+            <td>{reviewData.id}</td>
+            <td>{reviewData.nickName}</td>
+            <td><Link to="/review"> {reviewData.reviewTitle}</Link></td>
+            <td>{reviewData.createdAt}</td>
+            <td>{reviewData.likeCount}</td>
+        </tr>
+    );
 }
-
-
-
 
 const ReviewList = () => {
     const [reviews, setReviews] = useState([]);
@@ -28,7 +23,8 @@ const ReviewList = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get(URL_VARIABLE + "review/1");
+                const response = await axios.get(URL_VARIABLE + "reviews/store/1");
+                console.log(response);
                 setReviews(response.data);
             } catch (error) {
                 console.error(error);
@@ -39,25 +35,29 @@ const ReviewList = () => {
     }, []);
 
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>reviewId</th>
-                    <th>작성자</th>
-                    <th>작성일자</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {reviews.map(review => <Reviews key={review.reviewId} reviewData={review} />)}
-            </tbody>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>reviewId</th>
+                        <th>작성자</th>
+                        <th>리뷰제목</th>
+                        <th>작성일자</th>
+                        <th>좋아요</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {reviews.map(review => <Reviews key={review.id} reviewData={review} />)}
+                </tbody>
+            </table>
             <div>
                 <Link to="/writeReview"><button >리뷰작성</button></Link>
             </div>
             <Routes>
+                <Route path="/review/*" element={<Review />} />
                 <Route path="/writeReview" element={<WriteReview />} />
             </Routes>
-        </table>
+        </div>
     );
 }
 

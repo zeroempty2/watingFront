@@ -1,6 +1,6 @@
-localTest
-let URL_VARIABLE = 'http://localhost:8080/'
-export default URL_VARIABLE
+//localTest
+export const URL_VARIABLE = 'http://localhost:8080/'
+
 
 // //server upload
 // let URL_VARIABLE = 'https://'

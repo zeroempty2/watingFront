@@ -1,7 +1,8 @@
 import React from "react"
-import {Routes,Route,Link} from "react-router-dom";
+import {Routes,Route} from "react-router-dom";
 import WriteReview from "./WriteReview";
-import axios from 'axios';
+
+// import axios from 'axios';
 
 const ReviewContents = ({reviewContentsData}) => {
     return(
@@ -20,30 +21,30 @@ const Comments = ({commentData}) => {
 }
 
 
-const writeComment = () => {
-    axios.post(URL_VARIABLE + "api/data")
-    .then(function (response) {
-      // 요청이 성공했을 때의 처리
-      console.log(response.data); 
-    })
-    .catch(function (error) {
-      // 요청이 실패했을 때의 처리
-      console.error(error); 
-    });
-}
+// const writeComment = () => {
+//     axios.post(URL_VARIABLE + "api/data")
+//     .then(function (response) {
+//       // 요청이 성공했을 때의 처리
+//       console.log(response.data); 
+//     })
+//     .catch(function (error) {
+//       // 요청이 실패했을 때의 처리
+//       console.error(error); 
+//     });
+// }
 
 
-const getComments = () => {
-    axios.get(URL_VARIABLE + "api/data")
-    .then(function (response) {
-      // 요청이 성공했을 때의 처리
-      console.log(response.data); 
-    })
-    .catch(function (error) {
-      // 요청이 실패했을 때의 처리
-      console.error(error); 
-    });
-  }
+// const getComments = () => {
+//     axios.get(URL_VARIABLE + "api/data")
+//     .then(function (response) {
+//       // 요청이 성공했을 때의 처리
+//       console.log(response.data); 
+//     })
+//     .catch(function (error) {
+//       // 요청이 실패했을 때의 처리
+//       console.error(error); 
+//     });
+//   }
 
 
 const Review = () =>{
@@ -83,7 +84,7 @@ const Review = () =>{
         </tbody>
         <div>
         <input type="text"></input>
-        <Link to = "/writeReview"><button onClick={writeComment}>댓글작성</button></Link >
+        {/* <Link to = "/writeReview"><button onClick={writeComment}>댓글작성</button></Link > */}
         </div>
         <Routes>
             <Route path="/writeReview" element={<WriteReview />} />
