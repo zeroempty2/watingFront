@@ -1,25 +1,24 @@
-import React from "react"
-import {Routes,Route} from "react-router-dom";
+import React ,{useState,useEffect} from "react"
+import {Routes,Route,useParams} from "react-router-dom";
 import WriteReview from "./WriteReview";
-
-// import axios from 'axios';
-
-const ReviewContents = ({reviewContentsData}) => {
-    return(
-        <tr>
-            <td>제목 : {reviewContentsData.reviewTitle} 작성자 : {reviewContentsData.writerName} 작성일자 : {reviewContentsData.createdAt} <br/>  <br/>{reviewContentsData.reviewContents} </td>
-        </tr>
-    )
-}
+import axios from 'axios';
+import { URL_VARIABLE } from "./ExportUrl"; 
 
 const Comments = ({commentData}) => {
     return(
         <tr>
-        <td>{commentData.commentId} 작성자 : {commentData.writerName} 댓글내용 : {commentData.commentContent} 작성일자 : {commentData.createdAt} <br/> </td>
+        <td>{commentData.commentId} 작성자 : {commentData.nickName} 댓글내용 : {commentData.commentContent} 작성일자 : {commentData.createdAt} <br/> </td>
     </tr>
     )
 }
 
+// const ReviewContents = ({reviewContentsData}) => {
+//     return(
+//         <tr>
+//             <td>제목 : {reviewContentsData.reviewTitle} 작성자 : {reviewContentsData.writerName} 작성일자 : {reviewContentsData.createdAt} <br/>  <br/>{reviewContentsData.reviewContents} </td>
+//         </tr>
+//     )
+// }
 
 // const writeComment = () => {
 //     axios.post(URL_VARIABLE + "api/data")
@@ -34,51 +33,60 @@ const Comments = ({commentData}) => {
 // }
 
 
-// const getComments = () => {
-//     axios.get(URL_VARIABLE + "api/data")
-//     .then(function (response) {
-//       // 요청이 성공했을 때의 처리
-//       console.log(response.data); 
-//     })
-//     .catch(function (error) {
-//       // 요청이 실패했을 때의 처리
-//       console.error(error); 
-//     });
-//   }
-
 
 const Review = () =>{
-   
-    const reviewContents = [
-        {reviewTitle : '리뷰제목입니다',
-        writerName : 'kim',
-        createdAt : '2024.01.01',
-        reviewContents : '리뷰내용입니다'
-        },
-    ];
+    
+    const { id } = useParams(); 
+    const [reviewContents,setReviewContents] = useState();
+    const [comments,setComment] = useState([]);
+    
+    // useEffect(() => {
+    //     const fetchReview = async () => {
+    //         try {
+    //             const response = await axios.get(URL_VARIABLE + "reviews/" + id);
+    //             console.log(response);
+    //             setReviewContents(response.data);
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     };
+    //     fetchReview();
+    // },[id])
 
-    const comments = [
-        {commentId : 1,
-        writerName : 'kim',
-        commentContent : '댓글입니다',
-        createdAt : '2024.02.01'
-        },
-        {commentId : 2,
-        writerName : 'lee',
-        commentContent : '댓글입니다',
-        createdAt : '2024.03.01'
-        },
-        {commentId : 3,
-        writerName : 'park',
-        commentContent : '댓글입니다',
-        createdAt : '2024.03.02'
-        },
-    ];
+const fetchReview = async () => {
+    await axios.get(URL_VARIABLE + "reviews/" + id)
+    .then(function (response) {
+    setReviewContents(response.data);
+      console.log(response.data); 
+    })
+    .catch(function (error) {
+      console.error(error); 
+    });
+}
+
+fetchReview();
+
+
+    useEffect(() => {
+        const fetchComments = async () => {
+            try {
+                const response = await axios.get(URL_VARIABLE + "comments/review/" + id);
+                console.log(response);
+                setComment(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchComments();
+    }, [id])
+
 
     return(
         <table>
         <tbody>
-            {reviewContents.map(reviewContents => <ReviewContents reviewContentsData = {reviewContents}/>)}
+        <tr>
+            <td>제목 : {reviewContents.reviewTitle} 작성자 : {reviewContents.writerName} 작성일자 : {reviewContents.createdAt} <br/>  <br/>{reviewContents.reviewContents} </td>
+        </tr>
              <br/>
             {comments.map(comments => <Comments commentData={comments} />)}
         </tbody>

@@ -9,12 +9,12 @@ function App() {
   return(
   <div className="App">
   <nav>
-  <Link to = "/"> Home </Link> | <Link to = "/reviewList/*"> ReviewList </Link> 
+  <Link to = "/"> Home </Link> | <Link to = "/reviewList"> ReviewList </Link> 
   </nav>
   <Routes>
     <Route path="/" element={<Home />} /> 
-    <Route path="/reviewList/*" element={<ReviewList />} />
-    <Route path="/review" element={<Review />} />
+    <Route path="/reviewList" element={<ReviewList />} />
+    <Route path="/review/:id" element={<Review />} />
     <Route path="/writeReview" element={<WriteReview />} />
   </Routes>
   </div>
