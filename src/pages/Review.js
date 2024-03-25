@@ -12,27 +12,6 @@ const Comments = ({commentData}) => {
     )
 }
 
-// const ReviewContents = ({reviewContentsData}) => {
-//     return(
-//         <tr>
-//             <td>제목 : {reviewContentsData.reviewTitle} 작성자 : {reviewContentsData.writerName} 작성일자 : {reviewContentsData.createdAt} <br/>  <br/>{reviewContentsData.reviewContents} </td>
-//         </tr>
-//     )
-// }
-
-// const writeComment = () => {
-//     axios.post(URL_VARIABLE + "api/data")
-//     .then(function (response) {
-//       // 요청이 성공했을 때의 처리
-//       console.log(response.data); 
-//     })
-//     .catch(function (error) {
-//       // 요청이 실패했을 때의 처리
-//       console.error(error); 
-//     });
-// }
-
-
 
 const Review = () =>{
     
@@ -40,31 +19,18 @@ const Review = () =>{
     const [reviewContents,setReviewContents] = useState();
     const [comments,setComment] = useState([]);
     
-    // useEffect(() => {
-    //     const fetchReview = async () => {
-    //         try {
-    //             const response = await axios.get(URL_VARIABLE + "reviews/" + id);
-    //             console.log(response);
-    //             setReviewContents(response.data);
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     };
-    //     fetchReview();
-    // },[id])
-
-const fetchReview = async () => {
-    await axios.get(URL_VARIABLE + "reviews/" + id)
-    .then(function (response) {
-    setReviewContents(response.data);
-      console.log(response.data); 
-    })
-    .catch(function (error) {
-      console.error(error); 
-    });
-}
-
-fetchReview();
+    useEffect(() => {
+        const fetchReview = async () => {
+            try {
+                const response = await axios.get(URL_VARIABLE + "reviews/" + id);
+                console.log(response);
+                setReviewContents(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchReview();
+    },[id])
 
 
     useEffect(() => {
@@ -84,9 +50,11 @@ fetchReview();
     return(
         <table>
         <tbody>
-        <tr>
-            <td>제목 : {reviewContents.reviewTitle} 작성자 : {reviewContents.writerName} 작성일자 : {reviewContents.createdAt} <br/>  <br/>{reviewContents.reviewContents} </td>
-        </tr>
+        {reviewContents && (
+                <tr>
+                    <td>제목 : {reviewContents.reviewTitle} 작성자 : {reviewContents.nickName} 작성일자 : {reviewContents.createdAt} <br/>  <br/>{reviewContents.reviewContent} </td>
+                </tr>
+            )}
              <br/>
             {comments.map(comments => <Comments commentData={comments} />)}
         </tbody>
