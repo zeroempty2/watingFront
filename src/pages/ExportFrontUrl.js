@@ -1,0 +1,1 @@
+export const FRONT_URL_VARIABLE = 'http://localhost:3000/'
