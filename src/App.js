@@ -5,82 +5,51 @@ import Review from "./pages/Review";
 import Home from "./pages/Home";
 import WriteReview from "./pages/WriteReview";
 import Main from "./pages/Main";
-import './css/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './pages/css/style.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function App() {
   return(
-    <nav className="navbar navbar-expand-custom navbar-mainbg">
-    <a className="navbar-brand navbar-logo" href="#">
-      Navbar
-    </a>
-    <button
-      className="navbar-toggler"
-      type="button"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i className="fas fa-bars text-white" />
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav ml-auto">
-        <div className="hori-selector">
-          <div className="left" />
-          <div className="right" />
-        </div>
-        <li className="nav-item">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="fas fa-tachometer-alt" />
-            Dashboard
-          </a>
-        </li>
-        <li className="nav-item active">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="far fa-address-book" />
-            Address Book
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="far fa-clone" />
-            Components
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="far fa-calendar-alt" />
-            Calendar
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="far fa-chart-bar" />
-            Charts
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="javascript:void(0);">
-            <i className="far fa-copy" />
-            Documents
-          </a>
-        </li>
-      </ul>
-    </div>
-    <Routes>
+  <div className="App">
+
+        <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="#home">MainPage</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+          <Nav.Link style={{ textDecoration: 'none', fontFamily: 'Arial, sans-serif' }}>
+            <Link to="/Home" style={{ color: 'black' }}>Home</Link>
+          </Nav.Link>
+          <Nav.Link to = "/reviewList"> ReviewList </Nav.Link>
+            <Nav.Link href="#link">Link</Nav.Link>
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                Another action
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  <Routes>
     <Route path="/" element={<Home />} /> 
     <Route path="/reviewList" element={<ReviewList />} />
     <Route path="/review/:id" element={<Review />} />
     <Route path="/writeReview" element={<WriteReview />} />
     <Route path="/main" element={<Main />} />
   </Routes>
-  </nav>    
-
-  // <div className="App">
-  // <nav>
-  // <Link to = "/"> Home </Link> | <Link to = "/reviewList"> ReviewList </Link> | <Link to = "/main"> main </Link>
-  // </nav>
-
-  // </div>
+  </div>
   );
 }
 
