@@ -5,3 +5,17 @@
   margin-left: 1px;
   justify-content: flex-start;
 }
+.bg-body-tertiary {
+  --bs-bg-opacity: 1;
+  background-color: #5161ce !important;
+  border-radius : 10px;
+}
+.navbar-brand {
+  padding-top: var(--bs-navbar-brand-padding-y);
+  padding-bottom: var(--bs-navbar-brand-padding-y);
+  margin-right: var(--bs-navbar-brand-margin-end);
+  font-size: var(--bs-navbar-brand-font-size);
+  color: white;
+  text-decoration: none;
+  white-space: nowrap;
+}
