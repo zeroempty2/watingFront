@@ -1,76 +1,74 @@
 //함수형 컴포넌트
-import React from "react"
+import React, { useState, useEffect } from 'react';
+import { URL_VARIABLE } from "./ExportUrl"; 
 import './css/HomeStyle.css'
 
-function Home(){
+const Stores = ({data}) => {
+  return(
+    <article className="sale-item">
+    <img
+      src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
+      alt="You get: a white computer with matching peripherals"
+    />
+    <h1>{data.storeName}</h1>
+    <p>
+      스토어 위치, 카테고리, {data.starRate}
+    </p>
+  </article>
+  )
+}
 
 
-    <main className="deals">
-    <article className="sale-item">
-      <h1>Computer Starter Kit</h1>
-      <p>
-        This is the best computer money can buy, if you don’t have much money.
-      </p>
-      <ul>
-        <li>Computer</li>
-        <li>Monitor</li>
-        <li>Keyboard</li>
-        <li>Mouse</li>
-      </ul>
-      <img
-        src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
-        alt="You get: a white computer with matching peripherals"
-      />
-      <button>BUY NOW</button>
-    </article>
-    <article className="sale-item">
-      <h1>Printer</h1>
-      <p>Only capable of printing ASCII art.</p>
-      <ul>
-        <li>Paper and ink not included.</li>
-      </ul>
-      <img
-        src="https://www.w3.org/TR/css-flexbox-1/images/printer.png"
-        alt="You get: a dot-matrix printer."
-      />
-      <button>BUY NOW</button>
-    </article>
-    <article className="sale-item">
-      <h1>Printer 2</h1>
-      <p>A la 1989.</p>
-      <img
-        src="https://www.w3.org/TR/css-flexbox-1/images/printer.png"
-        alt="You get: a dot-matrix printer."
-      />
-      <button>BUY NOW</button>
-    </article>
-    <article className="sale-item">
-      <h1>Mouse</h1>
-      <p>
-        A computer mouse is a pointing device (hand control) that detects
-        two-dimensional motion relative to a surface. This motion is typically
-        translated into the motion of a pointer on a display, which allows a
-        smooth control of the graphical user interface. Clickity Click!
-      </p>
-      <button>BUY NOW</button>
-    </article>
-    <article className="sale-item">
-      <h1>Macintosh 8500</h1>
-      <p>
-        This is the best computer money can buy, if you don’t have much money.
-        This computer was state of the art in 1995.
-      </p>
-      <img
-        src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
-        alt="You get: a white computer with matching peripherals."
-      />
-      <button>BUY NOW</button>
-      
-    </article>
-  </main>
+const Home = () => {
+  const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const size = 6;
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    
-  ;
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+    // eslint-disable-next-line
+  }, [data]); // 데이터가 업데이트될 때마다 스크롤 이벤트를 감지
+
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
+    fetchData();
+  };
+
+  const fetchData = async () => {
+    setLoading(true);
+    const response = await fetch(URL_VARIABLE + `stores?page=${page}?size=${size}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+    const newData = await response.json();
+    setData([...data, ...newData]);
+    setPage(page + 1);
+    setLoading(false);
+  };
+  
+return(
+  <main className="deals">
+    {data.map(data => <Stores storeData={data} />)}
+    <article className="sale-item">
+    <img
+      src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
+      alt="You get: a white computer with matching peripherals"
+    />
+    <h1>이름칸ㄴㄴㄴ</h1>
+    <p>
+      스토어 위치, 카테고리
+    </p>
+  </article>
+</main>
+);
 }
 
 export default Home; 
