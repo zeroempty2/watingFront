@@ -36,14 +36,20 @@
     font-family: Avenir, Roboto, Helvetica, san-serif; 
     font-size: 80%;
     margin-top: 30px;
+    display: grid; /* 그리드 레이아웃 사용 */
+    grid-template-columns: repeat(5, 1fr); /* 열의 개수 설정 */
+    grid-gap: 1rem; /* 간격 설정 */
   }
+  
   .sale-item {
     display: flex;
     flex-flow: column;
     border:  1px solid black;
     border-radius: 1rem;
     padding: 2rem;
+    width: 100%; /* 요소 너비를 100%로 설정하여 한 줄에 하나의 요소만 표시 */
   }
+
   .sale-item > h1 {
     margin: 1rem 1rem 0;
   }

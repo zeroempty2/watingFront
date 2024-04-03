@@ -1,87 +1,76 @@
-//함수형 컴포넌트
 import React, { useState, useEffect } from 'react';
 import { URL_VARIABLE } from "./ExportUrl"; 
 import './css/HomeStyle.css'
 
-const Stores = ({data}) => {
-  return(
+const Stores = ({ storeData }) => {
+  return (
     <article className="sale-item">
-    <img
-      src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
-      alt="You get: a white computer with matching peripherals"
-    />
-    <h1>{data.storeName}</h1>
-    <p>
-      스토어 위치, 카테고리, {data.starRate}
-    </p>
-  </article>
-  )
+      <img
+        src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
+        alt="You get: a white computer with matching peripherals"
+      />
+      <h1>{storeData.storeName}</h1>
+      <p>
+        스토어 위치, 카테고리, {storeData.starRate}
+      </p>
+    </article>
+  );
 }
-
 
 const Home = () => {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
-  const size = 6;
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [page, setPage] = useState(0);
+  const [totalPage, setTotalPage] = useState({total : 0});
+
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    fetchData();
+    console.log('useEffect')
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-    // eslint-disable-next-line
-  }, [data]); // 데이터가 업데이트될 때마다 스크롤 이벤트를 감지
+  }, [page]);
 
   const handleScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
-    fetchData();
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight &&
+      !loading
+    ) {
+      loadMoreData();
+    }
   };
 
   const fetchData = async () => {
     setLoading(true);
-    const response = await fetch(URL_VARIABLE + `stores?page=${page}?size=${size}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
+    const response = await fetch(`${URL_VARIABLE}stores?page=${page}&size=15`);
     const newData = await response.json();
-    setData([...data, ...newData]);
-    setPage(page + 1);
+    setData((prevData) => [...prevData, ...newData.content]);
+    setTotalPage((prevState) => {
+      prevState.total = newData.totalPages;
+      return prevState;
+    });
     setLoading(false);
+    console.log(totalPage);
   };
   
-return(
-  <main className="deals">
-    {data.map(data => <Stores storeData={data} />)}
-    <article className="sale-item">
-    <img
-      src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
-      alt="You get: a white computer with matching peripherals"
-    />
-    <h1>이름칸ㄴㄴㄴ</h1>
-    <p>
-      스토어 위치, 카테고리
-    </p>
-  </article>
-</main>
-);
+
+
+  const loadMoreData = () => {
+    if (page < totalPage.total - 1) {
+      console.log('loadMoreData');
+      setPage(page + 1);
+    }
+  };
+
+  return (
+    <main className="deals">
+       {data.map((storeData, index) => (
+        <Stores key={index} storeData={storeData} />
+      ))}
+      {loading && <p>Loading...</p>}
+    </main>
+  );
 }
 
-export default Home; 
-
-
-//class형 컴포넌트
-// import React, {Component} from "react"
-
-// class Home extends Component{
-//     render(){
-//         return <h1>Home 화면</h1>
-//     }
-// }
-
-// export default Home;
-
+export default Home;
