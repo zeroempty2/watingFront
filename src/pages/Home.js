@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { URL_VARIABLE } from "./ExportUrl"; 
 import './css/HomeStyle.css'
+import {Routes,Route,Link} from "react-router-dom";
+import Store from "./Store";
 
 const Stores = ({ storeData }) => {
   return (
-    <article className="sale-item">
-      <img
+    <article className="sale-item">   
+      <Link to={`/store/${storeData.id}`}><img
         src="https://www.w3.org/TR/css-flexbox-1/images/computer.jpg"
         alt="You get: a white computer with matching peripherals"
-      />
-      <h1>{storeData.storeName}</h1>
+      /></Link>
+      <Link to={`/store/${storeData.id}`}><h1>{storeData.storeName}</h1></Link>
       <p>
         스토어 위치, 카테고리, {storeData.starRate}
       </p>
@@ -69,6 +71,9 @@ const Home = () => {
         <Stores key={index} storeData={storeData} />
       ))}
       {loading && <p>Loading...</p>}
+      <Routes>
+          <Route path="/store/:id" element={<Store />} />
+      </Routes>
     </main>
   );
 }

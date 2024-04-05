@@ -4,13 +4,13 @@ import ReviewList from "./pages/ReviewList";
 import Review from "./pages/Review";
 import Home from "./pages/Home";
 import WriteReview from "./pages/WriteReview";
-import Main from "./pages/Main";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './pages/css/style.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Store from "./pages/Store";
 
 function App() {
   return(
@@ -46,7 +46,7 @@ function App() {
     <Route path="/reviewList" element={<ReviewList />} />
     <Route path="/review/:id" element={<Review />} />
     <Route path="/writeReview" element={<WriteReview />} />
-    <Route path="/main" element={<Main />} />
+    <Route path="/store/:id" element={<Store />} />
   </Routes>
 
   </div>
