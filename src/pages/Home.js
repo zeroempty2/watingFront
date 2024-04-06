@@ -28,7 +28,6 @@ const Home = () => {
 
   useEffect(() => {
     fetchData();
-    console.log('useEffect')
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [page]);
@@ -53,14 +52,10 @@ const Home = () => {
       return prevState;
     });
     setLoading(false);
-    console.log(totalPage);
   };
   
-
-
   const loadMoreData = () => {
     if (page < totalPage.total - 1) {
-      console.log('loadMoreData');
       setPage(page + 1);
     }
   };
@@ -72,7 +67,7 @@ const Home = () => {
       ))}
       {loading && <p>Loading...</p>}
       <Routes>
-          <Route path="/store/:id" element={<Store />} />
+          <Route path="/store/:id/*" element={<Store />} />
       </Routes>
     </main>
   );
